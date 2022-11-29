@@ -9,7 +9,8 @@ import (
 )
 
 func Test(t *testing.T) {
-	testFiles := []string{"input.txt", "image.jpg", "im.png", "main.out", "test.o"}
+	testFiles := []string{"tests/input.txt", "tests/image.jpg", "tests/archive.zip",
+		"tests/im.png", "tests/main.out", "tests/test.o"}
 
 	for _, testFile := range testFiles {
 		data, _ := os.ReadFile(testFile)
@@ -26,6 +27,8 @@ func Test(t *testing.T) {
 		isEqual := bytes.Equal(data, decodedText)
 		if !isEqual {
 			t.Errorf("not equal")
+		} else {
+			t.Logf("%s passed", testFile)
 		}
 	}
 }
