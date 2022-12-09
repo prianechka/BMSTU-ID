@@ -23,7 +23,6 @@ func NewRSA(limit int64) *RSA {
 
 	var p, q int64
 	N := len(PrimeNumbers)
-	rand.Intn(N)
 
 	/*
 		p = PrimeNumbers[len(PrimeNumbers)-1]
@@ -44,13 +43,14 @@ func NewRSA(limit int64) *RSA {
 	}
 	/*
 
-		for _, curPrimeNumber := range PrimeNumbersToCreatePublicKey {
-			if ExtendedEuclideanGCD(curPrimeNumber, rsa.Fi) == 1 {
-				rsa.E = curPrimeNumber
-				break
+			for _, curPrimeNumber := range PrimeNumbersToCreatePublicKey {
+				if ExtendedEuclideanGCD(curPrimeNumber, rsa.Fi) == 1 {
+					rsa.E = curPrimeNumber
+					break
+				}
 			}
-		}
-		rsa.E = 65537
+			rsa.E = 65537
+		НОД(a, b) = x*a + y*b
 	*/
 	rsa.D = OtherKeyByGCD(rsa.E, rsa.Fi)
 
@@ -139,9 +139,26 @@ func ExtendedEuclideanGCDProcess(a, b int64) (int64, int64, int64) {
 
 func Int64ToBytes(array []int64) []byte {
 	bytes := make([]byte, 0)
+	tmpBytes := make([]byte, 8)
 	for _, el := range array {
 		big := new(big.Int).SetInt64(el)
-		bytes = append(bytes, big.Bytes()...)
+		bytes = append(bytes, big.FillBytes(tmpBytes)...)
 	}
 	return bytes
+}
+
+func BytesToInt64(array []byte) []int64 {
+	numbers := make([]int64, 0)
+	tmpBytes := make([]byte, 0)
+	i := 0
+	for _, el := range array {
+		tmpBytes = append(tmpBytes, el)
+		i += 1
+		if i == 8 {
+			newNum := new(big.Int).Int64()
+			numbers = append(numbers, newNum)
+			i = 0
+		}
+	}
+	return numbers
 }

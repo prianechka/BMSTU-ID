@@ -25,15 +25,15 @@ func NewHuffmanTree(srcFileData []byte) *Tree {
 }
 
 type Node struct {
-	value  uint32
-	weight int
-	Left   *Node
-	Right  *Node
+	value  uint32 `json:"Value"`
+	weight int    `json:"Weight"`
+	Left   *Node  `json:"Left"`
+	Right  *Node  `json:"Right"`
 }
 
 type Tree struct {
-	Data []byte
-	Root *Node
+	Data []byte `json:"Data"`
+	Root *Node  `json:"Root"`
 }
 
 func (t *Tree) Compress(res *[]byte) error {

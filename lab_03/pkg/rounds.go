@@ -61,6 +61,7 @@ func Feistel(block []string, key string) uint64 {
 
 	ZArray := strings.Split(ZInFeistelString, "")
 	Z := subtitution(ZArray)
+
 	Z = finishedPermutationP(Z)
 
 	result, _ := strconv.ParseUint(strings.Join(Z, ""), 2, 0)
